@@ -1,29 +1,45 @@
-function Car(make, model) {
-    this.make = make;
-    this.model = model;
+function Car(make, model, year) {
+  this.make = make;
+  this.model = model;
+  this.year = year;
 }
 
-// Step 2: getMakeModel Method
+// Adding method to Car prototype
 Car.prototype.getMakeModel = function() {
-    return `${this.make} ${this.model}`;
+  return `${this.make} ${this.model}`;
 };
 
-// Step 3: SportsCar Constructor
-function SportsCar(make, model, topSpeed) {
-    Car.call(this, make, model); // Call Car constructor
-    this.topSpeed = topSpeed;
+Car.prototype.getCarDetails = function() {
+  return `${this.year} ${this.make} ${this.model}`;
+};
+
+// SportsCar constructor function inheriting from Car
+function SportsCar(make, model, year, topSpeed) {
+  Car.call(this, make, model, year); // Call Car constructor
+  this.topSpeed = topSpeed;
 }
 
-// Step 4: Inheritance
+// Inherit Car prototype methods
 SportsCar.prototype = Object.create(Car.prototype);
+
+// Restore constructor reference
 SportsCar.prototype.constructor = SportsCar;
 
-// Step 5: getTopSpeed Method
+// Adding method to SportsCar prototype
 SportsCar.prototype.getTopSpeed = function() {
-    return this.topSpeed;
+  return this.topSpeed;
+};
+
+SportsCar.prototype.displayCarInfo = function() {
+  console.log(`Make: ${this.make}`);
+  console.log(`Model: ${this.model}`);
+  console.log(`Year: ${this.year}`);
+  console.log(`Top Speed: ${this.topSpeed} mph`);
 };
 
 // Example Usage
-const car = new SportsCar("Ferrari", "Testarossa", 200);
+const car = new SportsCar("Ferrari", "Testarossa", 1984, 200);
 console.log(car.getMakeModel()); // Output: Ferrari Testarossa
 console.log(car.getTopSpeed()); // Output: 200
+console.log(car.getCarDetails()); // Output: 1984 Ferrari Testarossa
+car.displayCarInfo();
